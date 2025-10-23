@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=BBH+Sans+Bogle&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'BBH Sans Bogle', sans-serif;
+}
+
+.navbar-brand {
+    margin: 0 20px;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+body {
+    background-image: url('../images/NMS.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.container.text-center {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.r {
+    color: rgb(238, 197, 17);
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.lead {
+    color: rgb(238, 197, 17);
+    font-size: 1.5rem;
+    font-weight: 300;
+    text-align: center;
+}
+
+.col-custom {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.img-small {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 576px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+    .lead {
+        font-size: 0.95rem;
+    }
+    .card img {
+        height: 180px;
+        object-fit: cover;
+    }
+}

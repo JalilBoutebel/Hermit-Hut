@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon panier{% endblock %}
+
+{% block body %}
+
+{# Debug si tu veux voir la structure exacte #}
+{# {{ dump(panier) }} #}
+
+<div class="container my-5">
+    <h1 class="text-center mb-4">🛒 Mon Panier</h1>
+
+{% if panier is empty %}
+    <p class="text-center text-muted">Votre panier est vide.</p>
+{% else %}
+    <table class="table table-stripped table-bordered text-center align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Jeu</th>
+                <th>Prix</th>
+                <th>Quantite</th>
+                <th>Sous-total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in panier %}
+                {# item.jeu est l'entité Jeu, item.quantite la quantité #}
+                <tr>
+                    <td>
+                    <strong>{{ item.jeu.libelle }}</strong><br>
+                    {% if item.jeu.image %}
+                        <img src="{{ asset(item.jeu.image) }}" alt="{{ item.jeu.libelle }}" height="80">
+                    {% endif %}
+                    
+                    </td>
+                    {# si prix est stocké en string/decimal : adapter l'affichage #
+                       Exemple si prix en euros float : {{ item.jeu.prix }} €
+                       Si prix en centimes (int) : {{ (item.jeu.prix / 100) | number_format(2, ',', ' ') }} € #}
+                    <td>{{ item.jeu.prix }} € <br></td>
+                    <td>{{ item.quantite }} <br></td>
+                    <td>{{ (item.jeu.prix * item.quantite) }} €</td>
+                    <td>
+                        <a href="{{ path('app_del_panier', {id: item.jeu.id}) }}">-</a>
+                        |
+                        <a href="{{ path('app_add_panier', {id: item.jeu.id}) }}">+</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {# total simple calculé ici (ou depuis PanierService) #}
+    {% set total = 0 %}
+    {% for item in panier %}
+    <style>
+    body {
+        color: #148b1aff;
+    }
+    table {
+        background-color: rgba(0, 0, 0, 0.6);
+        border-radius: 10px;
+    }
+    th, td {
+        padding: 15px !important;
+    }
+</style>
+        {% set total = total + (item.jeu.prix * item.quantite) %}
+    {% endfor %}
+    <p><strong>Total : {{ total }} €</strong></p>
+
+{% endif %}
+
+{% endblock %}
