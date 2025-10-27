@@ -262,4 +262,27 @@ class AppFixtures extends Fixture
 
         $manager->flush();
     }
+
+    private $hasher;
+
+    public function __construct(UserPasswordHasherInterface $hasher)
+    {
+
+    }
+    
+    public function loadUser(ObjectManager $manager): void
+    {
+        $user = new User();
+        $user->setEmail("titi@hotmail.com");
+        $user->setPassword("5678");
+        $user->setRoles(["ROLE_ADMIN", "ROLE_USER"]);
+
+
+
+        $manager->persist($user);
+
+        $manager->flush();
+    }
+
 }
+
