@@ -1,26 +1,232 @@
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
-
-    <h1 class="r">Bienvenue sur Hermit's Hut</h1>
-    <p class="lead">Votre boutique en ligne de jeux video</p>
-
-    <div class="container text-center">
-        <div class="row">
-        <div class="col-12">
-            {{ categorie.libelle }}
+<h1 class="r">Bienvenue sur Hermit's Hut</h1>
+<p class="lead">Votre boutique en ligne de jeux video</p>
+<div class="container text-center">
+    <div class="row">
+        <div class="col-12 mb-3">
+            <h2 class="categorie-title">{{ categorie.libelle }}</h2>
         </div>
-            {% for jeu in categorie.jeux %}
-            <div class="col-12 col-sm-6 col-md-3 mb-4 col-custom">
-                {{ jeu.libelle }}
-                <img src="{{ asset(jeu.image) }}" class="card-img-top" height="350">
-                <a href="{{ path('app_add_panier', {id: jeu.id}) }}" class="btn btn-success">Ajouter</a>
-                <a href="{{ path('app_details', {id: jeu.id}) }}" class="btn btn-info">Details</a>
-
-
+        {% for jeu in categorie.jeux %}
+        <div class="col-12 col-sm-6 col-md-3 mb-4 col-custom">
+            {{ jeu.libelle }}
+            <img src="{{ asset(jeu.image) }}" class="card-img-top game-image" height="350" 
+                 style="cursor: pointer;" 
+                 data-jeu-id="{{ jeu.id }}"
+                 data-jeu-libelle="{{ jeu.libelle }}"
+                 data-jeu-image="{{ asset(jeu.image) }}"
+                 data-jeu-categorie="{{ jeu.categorie.libelle }}"
+                 data-jeu-description="{{ jeu.description }}"
+                 data-jeu-prix="{{ jeu.prix }}">
         </div>
-            {% endfor %}
+        {% endfor %}
     </div>
+</div>
 
+<!-- Modal Popup -->
+<div id="gameModal" class="game-modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
+<style>
+/* Style du modal */
+.game-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.85);
+    animation: fadeIn 0.3s;
+}
+
+.categorie-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #e2df14ff;
+    text-transform: uppercase;
+    margin: 20px 0;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 3px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    margin: 5% auto;
+    padding: 30px;
+    border: 2px solid #0ce44cff;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    box-shadow: 0 0 30px rgba(17, 235, 90, 0.5);
+    animation: slideDown 0.4s;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.close-modal {
+    color: #00ff00ff;
+    float: right;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 20px;
+    transition: all 0.3s;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: #ff0055;
+
+}
+
+.details-content {
+    text-align: center;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.details-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 0 20px #9ee913ff;
+    margin: 15px 0;
+}
+
+.price {
+    color: #8ae414ff;
+    font-weight: bold;
+    margin-top: 15px;
+    font-size: 1.5rem;
+    text-shadow: 0 0 10px #74e914ff;
+}
+
+.btn-add {
+    background: linear-gradient(135deg, #17e74bff, #14e65aff);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 15px;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 255, 42, 0.3);
+}
+
+.btn-add:hover {
+    background: linear-gradient(135deg, #85ec0fff, #a8f31cff);
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(20, 189, 14, 0.5);
+}
+
+.game-image:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('gameModal');
+    const modalBody = document.getElementById('modalBody');
+    const closeBtn = document.querySelector('.close-modal');
+    
+    // Fonction pour ouvrir le modal
+    function openModal(jeuData) {
+        const content = `
+            <div class="details-content">
+                <h2>${jeuData.libelle}</h2>
+                <img src="${jeuData.image}" alt="${jeuData.libelle}" class="details-img">
+                <p><strong>Catégorie :</strong> ${jeuData.categorie}</p>
+                <p>${jeuData.description}</p>
+                <p class="price">💰 ${jeuData.prix} €</p>
+                <a href="/panier/add/${jeuData.id}" class="btn-add">🛒 Ajouter au panier</a>
+            </div>
+        `;
+        modalBody.innerHTML = content;
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Empêche le scroll
+    }
+    
+    // Fonction pour fermer le modal
+    function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+    
+    // Ouvrir via le bouton Details
+    document.querySelectorAll('.open-details').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const img = this.previousElementSibling.previousElementSibling;
+            const jeuData = {
+                id: img.dataset.jeuId,
+                libelle: img.dataset.jeuLibelle,
+                image: img.dataset.jeuImage,
+                categorie: img.dataset.jeuCategorie,
+                description: img.dataset.jeuDescription,
+                prix: img.dataset.jeuPrix
+            };
+            openModal(jeuData);
+        });
+    });
+    
+    // Ouvrir via clic sur l'image
+    document.querySelectorAll('.game-image').forEach(img => {
+        img.addEventListener('click', function() {
+            const jeuData = {
+                id: this.dataset.jeuId,
+                libelle: this.dataset.jeuLibelle,
+                image: this.dataset.jeuImage,
+                categorie: this.dataset.jeuCategorie,
+                description: this.dataset.jeuDescription,
+                prix: this.dataset.jeuPrix
+            };
+            openModal(jeuData);
+        });
+    });
+    
+    // Fermer via le X
+    closeBtn.addEventListener('click', closeModal);
+    
+    // Fermer via clic en dehors du modal
+    window.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+    
+    // Fermer via touche Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.style.display === 'block') {
+            closeModal();
+        }
+    });
+});
+</script>
 {% endblock %}
