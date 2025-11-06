@@ -1,74 +1,180 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon panier{% endblock %}
+{% block title %}🛒 Mon Panier - Hermit's Hut{% endblock %}
 
 {% block body %}
+<div class="panier-wrapper">
+    <div class="panier-container">
+        <h1>🛒 Mon Panier</h1>
 
-{# Debug si tu veux voir la structure exacte #}
-{# {{ dump(panier) }} #}
+        {% if panier is empty %}
+            <p class="text-center empty-message">Votre panier est vide.</p>
+        {% else %}
+            <div class="table-responsive">
+                <table class="panier-table">
+                    <thead>
+                        <tr>
+                            <th>Jeu</th>
+                            <th>Prix</th>
+                            <th>Quantité</th>
+                            <th>Sous-total</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% set total = 0 %}
+                        {% for item in panier %}
+                            {% set sous_total = item.jeu.prix * item.quantite %}
+                            {% set total = total + sous_total %}
+                            <tr>
+                                <td>
+                                    <strong>{{ item.jeu.libelle }}</strong><br>
+                                    {% if item.jeu.image %}
+                                        <img src="{{ asset(item.jeu.image) }}" 
+                                             alt="{{ item.jeu.libelle }}" 
+                                             height="80" class="jeu-img">
+                                    {% endif %}
+                                </td>
+                                <td>{{ item.jeu.prix }} €</td>
+                                <td>{{ item.quantite }}</td>
+                                <td>{{ sous_total }} €</td>
+                                <td>
+                                    <a href="{{ path('app_del_panier', {id: item.jeu.id}) }}" class="btn-action">➖</a>
+                                    <a href="{{ path('app_add_panier', {id: item.jeu.id}) }}" class="btn-action">➕</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
-<div class="container my-5">
-    <h1 class="text-center mb-4">🛒 Mon Panier</h1>
+            <p class="total">💰 Total : <strong>{{ total }} €</strong></p>
+        {% endif %}
+    </div>
+</div>
 
-{% if panier is empty %}
-    <p class="text-center text-muted">Votre panier est vide.</p>
-{% else %}
-    <table class="table table-stripped table-bordered text-center align-middle">
-        <thead class="table-dark">
-            <tr>
-                <th>Jeu</th>
-                <th>Prix</th>
-                <th>Quantite</th>
-                <th>Sous-total</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in panier %}
-                {# item.jeu est l'entité Jeu, item.quantite la quantité #}
-                <tr>
-                    <td>
-                    <strong>{{ item.jeu.libelle }}</strong><br>
-                    {% if item.jeu.image %}
-                        <img src="{{ asset(item.jeu.image) }}" alt="{{ item.jeu.libelle }}" height="80">
-                    {% endif %}
-                    
-                    </td>
-                    {# si prix est stocké en string/decimal : adapter l'affichage #
-                       Exemple si prix en euros float : {{ item.jeu.prix }} €
-                       Si prix en centimes (int) : {{ (item.jeu.prix / 100) | number_format(2, ',', ' ') }} € #}
-                    <td>{{ item.jeu.prix }} € <br></td>
-                    <td>{{ item.quantite }} <br></td>
-                    <td>{{ (item.jeu.prix * item.quantite) }} €</td>
-                    <td>
-                        <a href="{{ path('app_del_panier', {id: item.jeu.id}) }}">-</a>
-                        |
-                        <a href="{{ path('app_add_panier', {id: item.jeu.id}) }}">+</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<style>
+/* 🌌 Arrière-plan global */
+body {
+    background-attachment: fixed;
+    font-family: 'Orbitron', sans-serif;
+    color: #fff;
+    min-height: 100vh;
+    margin: 0;
+}
 
-    {# total simple calculé ici (ou depuis PanierService) #}
-    {% set total = 0 %}
-    {% for item in panier %}
-    <style>
-    body {
-        color: #148b1aff;
+/* 🌫️ Conteneur centré */
+.panier-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px 15px;
+}
+
+/* 🛒 Bloc du panier */
+.panier-container {
+    width: 100%;
+    max-width: 900px;
+    background: rgba(0, 0, 0, 0.65);
+    border-radius: 15px;
+    padding: 30px 40px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+}
+
+/* 🧠 Titre */
+.panier-container h1 {
+    text-align: center;
+    color: #20dd75ff;
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px #11cc75ff;
+    font-weight: 700;
+}
+
+/* 🧾 Tableau */
+.panier-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.panier-table th {
+    background: rgba(0, 255, 255, 0.15);
+    color: #0dd34fff;
+    text-transform: uppercase;
+    padding: 15px;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+}
+
+.panier-table td {
+    padding: 15px;
+    color: #f0f0f0;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.panier-table tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* 🎮 Images des jeux */
+.jeu-img {
+    border-radius: 8px;
+    margin-top: 8px;
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+    transition: transform 0.3s ease;
+}
+.jeu-img:hover {
+    transform: scale(1.1);
+}
+
+/* ➕➖ Boutons */
+.btn-action {
+    color: #15df80ff;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+}
+.btn-action:hover {
+    color: #91f71cff;
+    text-shadow: 0 0 10px #0be97aff;
+}
+
+/* 💰 Total */
+.total {
+    margin-top: 25px;
+    text-align: right;
+    font-size: 1.3rem;
+    color: #8dd617ff;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(142, 238, 31, 0.7);
+}
+
+/* 🧩 Message panier vide */
+.empty-message {
+    text-align: center;
+    color: #ccc;
+    font-style: italic;
+    margin-top: 20px;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+    .panier-container {
+        padding: 20px;
     }
-    table {
-        background-color: rgba(0, 0, 0, 0.6);
-        border-radius: 10px;
+    .panier-table th, .panier-table td {
+        padding: 10px;
+        font-size: 0.85rem;
     }
-    th, td {
-        padding: 15px !important;
+    .total {
+        text-align: center;
+        margin-top: 15px;
     }
+}
 </style>
-        {% set total = total + (item.jeu.prix * item.quantite) %}
-    {% endfor %}
-    <p><strong>Total : {{ total }} €</strong></p>
-
-{% endif %}
-
 {% endblock %}

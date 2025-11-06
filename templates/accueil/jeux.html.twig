@@ -15,7 +15,9 @@
             <div class="col-12 col-sm-6 col-md-3 mb-4 col-custom">
                 {{ jeu.libelle }}
                 <img src="{{ asset(jeu.image) }}" class="card-img-top" height="350">
-                <a href="{{ path('app_add_panier', {id: jeu.id}) }}" class="btn btn-success">AJOUTER</a>
+                <a href="{{ path('app_add_panier', {id: jeu.id}) }}" class="btn btn-success">Ajouter</a>
+                <a href="{{ path('app_details', {id: jeu.id}) }}" class="btn btn-info">Details</a>
+
 
         </div>
             {% endfor %}

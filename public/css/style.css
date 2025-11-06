@@ -22,6 +22,12 @@ body {
     background-attachment: fixed;
 }
 
+.display-5 {
+    color: rgb(238, 197, 17);
+    margin-top: 3rem;
+    text-align: center;
+}
+
 .container.text-center {
     margin-top: 3rem;
     text-align: center;

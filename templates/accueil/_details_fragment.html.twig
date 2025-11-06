@@ -1,10 +1,7 @@
-{% extends 'base.html.twig' %}
-
-{% block body %}
 <div class="details-content">
     <h2>{{ jeu.libelle }}</h2>
     <img src="{{ asset(jeu.image) }}" alt="{{ jeu.libelle }}" class="details-img">
-    <p><strong>Categorie :</strong> {{ jeu.categorie.libelle }}</p>
+    <p><strong>Catégorie :</strong> {{ jeu.categorie.libelle }}</p>
     <p>{{ jeu.description }}</p>
     <p class="price">💰 {{ jeu.prix }} €</p>
     <a href="{{ path('app_add_panier', {id: jeu.id}) }}" class="btn-add">🛒 Ajouter au panier</a>
@@ -13,21 +10,23 @@
 <style>
 .details-content {
     text-align: center;
+    color: #fff;
     font-family: 'Orbitron', sans-serif;
 }
 .details-img {
     max-width: 300px;
     border-radius: 12px;
+    box-shadow: 0 0 15px #00fff7;
     margin: 15px 0;
 }
 .price {
-    color: #0bdf52ff;
+    color: #00fff7;
     font-weight: bold;
     margin-top: 15px;
     font-size: 1.3rem;
 }
 .btn-add {
-    background: #82d812ff;
+    background: #00b4ff;
     color: white;
     padding: 10px 20px;
     border-radius: 8px;
@@ -35,10 +34,7 @@
     font-weight: bold;
 }
 .btn-add:hover {
-    background: #10da42ff;
+    background: #00fff7;
     color: #000;
 }
 </style>
-{% endblock %}
-
-
