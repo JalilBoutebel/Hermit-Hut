@@ -1,0 +1,334 @@
+{% extends 'base.html.twig' %}
+{% block title %}Détails de la commande #{{ commande.id }}{% endblock %}
+
+{% block stylesheets %}
+<style>
+    body {
+        background: linear-gradient(135deg, #1a4d3e 0%, #2d7a5f 100%);
+        min-height: 100vh;
+        padding-bottom: 50px;
+    }
+    
+    .details-container {
+        max-width: 1000px;
+        margin: 50px auto;
+        padding: 20px;
+    }
+    
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        margin-bottom: 20px;
+        transition: transform 0.2s ease;
+    }
+    
+    .back-link:hover {
+        transform: translateX(-5px);
+        color: #00ffff;
+    }
+    
+    .details-header {
+        background: linear-gradient(135deg, #000 0%, #333 100%);
+        color: #fff;
+        padding: 30px 40px;
+        border-radius: 8px 8px 0 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .details-header::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #c8ff00ff, #0df853ff, #48ff00ff);
+    }
+    
+    .details-header h1 {
+        font-size: 2rem;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+    
+    .order-date {
+        opacity: 0.8;
+        margin-top: 10px;
+        font-size: 1.1rem;
+    }
+    
+    .details-content {
+        background: white;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .status-section {
+        padding: 30px 40px;
+        border-bottom: 2px solid #eee;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    
+    .status-card {
+        text-align: center;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        min-width: 200px;
+    }
+    
+    .status-card h3 {
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #666;
+        margin-bottom: 15px;
+    }
+    
+    .status-badge-large {
+        display: inline-block;
+        padding: 12px 24px;
+        border-radius: 30px;
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .products-section {
+        padding: 40px;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 25px;
+        color: #333;
+    }
+    
+    .product-item {
+        display: flex;
+        gap: 20px;
+        padding: 20px;
+        border: 2px solid #eee;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        transition: all 0.3s ease;
+    }
+    
+    .product-item:hover {
+        border-color: #92f054ff;
+        box-shadow: 0 4px 12px rgba(157, 255, 0, 0.2);
+    }
+    
+    .product-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+    
+    .product-info {
+        flex: 1;
+    }
+    
+    .product-name {
+        font-size: 18px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 10px;
+    }
+    
+    .product-details {
+        color: #666;
+        font-size: 14px;
+    }
+    
+    .product-price {
+        font-size: 18px;
+        font-weight: 700;
+        color: #a8d600ff;
+    }
+    
+    .address-section {
+        padding: 40px;
+        border-top: 2px solid #eee;
+    }
+    
+    .address-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 20px;
+    }
+    
+    .address-card {
+        padding: 25px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border-left: 4px solid #ff00ff;
+    }
+    
+    .address-card h3 {
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #333;
+        margin-bottom: 15px;
+    }
+    
+    .address-card p {
+        margin: 5px 0;
+        color: #666;
+    }
+    
+    .total-section {
+        padding: 30px 40px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 0 0 8px 8px;
+        border-top: 3px solid #a8d600ff;
+    }
+    
+    .total-line {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        font-size: 16px;
+    }
+    
+    .total-line.final {
+        font-size: 24px;
+        font-weight: 700;
+        color: #a8d600ff;
+        border-top: 2px solid #ddd;
+        margin-top: 15px;
+        padding-top: 15px;
+    }
+    
+    @media (max-width: 768px) {
+        .status-section {
+            flex-direction: column;
+        }
+        
+        .product-item {
+            flex-direction: column;
+        }
+        
+        .address-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="details-container">
+    <a href="{{ path('app_command') }}" class="back-link">
+        ← Retour aux commandes
+    </a>
+    
+    <div class="details-header">
+        <h1>Commande #{{ commande.id }}</h1>
+        <p class="order-date">Passée le {{ commande.dateCommande|date('d F Y à H:i') }}</p>
+    </div>
+    
+    <div class="details-content">
+        <!-- Statuts -->
+        <div class="status-section">
+            <div class="status-card">
+                <h3>Paiement</h3>
+                <span class="status-badge-large status-{{ commande.statutPaiement|lower }}">
+                    {{ commande.statutPaiement }}
+                </span>
+            </div>
+            
+            <div class="status-card">
+                <h3>Production</h3>
+                <span class="status-badge-large status-{{ commande.statutProduction|lower }}">
+                    {{ commande.statutProduction }}
+                </span>
+            </div>
+            
+            <div class="status-card">
+                <h3>Livraison</h3>
+                <span class="status-badge-large status-{{ commande.statutLivraison|lower }}">
+                    {{ commande.statutLivraison }}
+                </span>
+            </div>
+        </div>
+        
+        <!-- Produits -->
+        <div class="products-section">
+            <h2 class="section-title">Produits commandés</h2>
+            
+            {% for ligne in commande.ligneCommandes %}
+            <div class="product-item">
+                <img src="{{ ligne.produit.image }}" alt="{{ ligne.produit.nom }}" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">{{ ligne.produit.nom }}</div>
+                    <div class="product-details">
+                        Quantité : {{ ligne.quantite }}<br>
+                        Prix unitaire : {{ ligne.prixUnitaire|number_format(2, ',', ' ') }} €
+                    </div>
+                </div>
+                <div class="product-price">
+                    {{ (ligne.quantite * ligne.prixUnitaire)|number_format(2, ',', ' ') }} €
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Adresses -->
+        <div class="address-section">
+            <h2 class="section-title">Informations de livraison</h2>
+            
+            <div class="address-grid">
+                <div class="address-card">
+                    <h3>Adresse de livraison</h3>
+                    <p><strong>{{ commande.adresseLivraison.nom }} {{ commande.adresseLivraison.prenom }}</strong></p>
+                    <p>{{ commande.adresseLivraison.adresse }}</p>
+                    <p>{{ commande.adresseLivraison.codePostal }} {{ commande.adresseLivraison.ville }}</p>
+                    <p>{{ commande.adresseLivraison.pays }}</p>
+                    {% if commande.adresseLivraison.telephone %}
+                    <p>Tél : {{ commande.adresseLivraison.telephone }}</p>
+                    {% endif %}
+                </div>
+                
+                <div class="address-card">
+                    <h3>Adresse de facturation</h3>
+                    <p><strong>{{ commande.adresseFacturation.nom }} {{ commande.adresseFacturation.prenom }}</strong></p>
+                    <p>{{ commande.adresseFacturation.adresse }}</p>
+                    <p>{{ commande.adresseFacturation.codePostal }} {{ commande.adresseFacturation.ville }}</p>
+                    <p>{{ commande.adresseFacturation.pays }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Total -->
+        <div class="total-section">
+            <div class="total-line">
+                <span>Sous-total</span>
+                <span>{{ commande.montantTotal|number_format(2, ',', ' ') }} €</span>
+            </div>
+            <div class="total-line">
+                <span>Frais de livraison</span>
+                <span>{{ commande.fraisLivraison|number_format(2, ',', ' ') }} €</span>
+            </div>
+            <div class="total-line final">
+                <span>Total</span>
+                <span>{{ (commande.montantTotal + commande.fraisLivraison)|number_format(2, ',', ' ') }} €</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,298 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}📦 Détails commande #{{ commande.id }} - Hermit's Hut{% endblock %}
+
+{% block body %}
+<div class="command-wrapper">
+    <div class="command-container">
+        <div class="header-actions">
+            <a href="{{ path('app_command') }}" class="btn-back">← Retour aux commandes</a>
+        </div>
+
+        <h1>📦 Commande #{{ commande.id }}</h1>
+        
+        <div class="commande-status">
+            <div class="status-badge statut-{{ commande.statut }}">
+                {% if commande.statut == 'en_attente' %}
+                    ⏳ En attente de validation
+                {% elseif commande.statut == 'validee' %}
+                    ✅ Commande validée
+                {% elseif commande.statut == 'expediee' %}
+                    📦 Commande expédiée
+                {% elseif commande.statut == 'livree' %}
+                    🎉 Commande livrée
+                {% elseif commande.statut == 'annulee' %}
+                    ❌ Commande annulée
+                {% endif %}
+            </div>
+            <p class="date-commande">Passée le {{ commande.dateCommande|date('d/m/Y à H:i') }}</p>
+        </div>
+
+        {# Informations de livraison #}
+        <div class="section">
+            <h2>📍 Adresse de livraison</h2>
+            <div class="info-box">
+                <p><strong>{{ app.user.nom }} {{ app.user.prenom }}</strong></p>
+                <p>{{ commande.adresseLivraison }}</p>
+                {% if commande.telephone %}
+                    <p>📞 {{ commande.telephone }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        {# Mode de paiement #}
+        <div class="section">
+            <h2>💳 Mode de paiement</h2>
+            <div class="info-box">
+                <p>
+                    {% if commande.modePaiement == 'carte' %}
+                        💳 Carte bancaire
+                    {% elseif commande.modePaiement == 'paypal' %}
+                        🔵 PayPal
+                    {% elseif commande.modePaiement == 'virement' %}
+                        🏦 Virement bancaire
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        {# Articles commandés #}
+        <div class="section">
+            <h2>🎮 Articles commandés</h2>
+            <table class="details-table">
+                <thead>
+                    <tr>
+                        <th>Jeu</th>
+                        <th>Prix unitaire</th>
+                        <th>Quantité</th>
+                        <th>Sous-total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ligne in commande.lignesCommande %}
+                        <tr>
+                            <td>
+                                <strong>{{ ligne.jeu.libelle }}</strong>
+                                {% if ligne.jeu.image %}
+                                    <br>
+                                    <img src="{{ asset(ligne.jeu.image) }}" 
+                                         alt="{{ ligne.jeu.libelle }}" 
+                                         height="60" class="jeu-img">
+                                {% endif %}
+                            </td>
+                            <td>{{ ligne.prix }} €</td>
+                            <td>{{ ligne.quantite }}</td>
+                            <td>{{ ligne.prix * ligne.quantite }} €</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <div class="total-section">
+                <p class="total-final">💰 Total : <strong>{{ commande.total }} €</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* 🌌 Arrière-plan global */
+body {
+    background-attachment: fixed;
+    font-family: 'Orbitron', sans-serif;
+    color: #fff;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* 🌫️ Conteneur centré */
+.command-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px 15px;
+}
+
+/* 📦 Bloc des détails */
+.command-container {
+    width: 100%;
+    max-width: 1000px;
+    background: rgba(0, 0, 0, 0.65);
+    border-radius: 15px;
+    padding: 30px 40px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+}
+
+/* 🔙 Actions en-tête */
+.header-actions {
+    margin-bottom: 20px;
+}
+
+.btn-back {
+    display: inline-block;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #0dd34fff;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 8px;
+    border: 2px solid #0dd34fff;
+    transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+    background: rgba(13, 211, 79, 0.2);
+    transform: translateX(-5px);
+}
+
+/* 🧠 Titre */
+.command-container h1 {
+    text-align: center;
+    color: #20dd75ff;
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px #11cc75ff;
+    font-weight: 700;
+}
+
+.command-container h2 {
+    color: #0dd34fff;
+    margin-bottom: 15px;
+    text-shadow: 0 0 8px #0dd34fff;
+    font-size: 1.3rem;
+}
+
+/* 📊 Statut de la commande */
+.commande-status {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.status-badge.statut-en_attente {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+    border: 2px solid #ffc107;
+}
+
+.status-badge.statut-validee {
+    background: rgba(76, 175, 80, 0.2);
+    color: #4caf50;
+    border: 2px solid #4caf50;
+}
+
+.status-badge.statut-expediee {
+    background: rgba(33, 150, 243, 0.2);
+    color: #2196f3;
+    border: 2px solid #2196f3;
+}
+
+.status-badge.statut-livree {
+    background: rgba(32, 221, 117, 0.2);
+    color: #20dd75ff;
+    border: 2px solid #20dd75ff;
+}
+
+.status-badge.statut-annulee {
+    background: rgba(244, 67, 54, 0.2);
+    color: #f44336;
+    border: 2px solid #f44336;
+}
+
+.date-commande {
+    color: #8dd617ff;
+    font-size: 0.95rem;
+}
+
+/* 📦 Sections */
+.section {
+    margin-bottom: 30px;
+}
+
+/* 📝 Boîte d'infos */
+.info-box {
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(13, 211, 79, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.info-box p {
+    margin: 5px 0;
+    color: #f0f0f0;
+}
+
+/* 🧾 Tableau des détails */
+.details-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.details-table th {
+    background: rgba(0, 255, 255, 0.15);
+    color: #0dd34fff;
+    text-transform: uppercase;
+    padding: 15px;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+}
+
+.details-table td {
+    padding: 15px;
+    color: #f0f0f0;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.details-table tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* 🎮 Images des jeux */
+.jeu-img {
+    border-radius: 8px;
+    margin-top: 8px;
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+}
+
+/* 💰 Total */
+.total-section {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.total-final {
+    font-size: 1.5rem;
+    color: #8dd617ff;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(142, 238, 31, 0.7);
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+    .command-container {
+        padding: 20px;
+    }
+    
+    .details-table th, .details-table td {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+    
+    .total-section {
+        text-align: center;
+    }
+}
+</style>
+{% endblock %}

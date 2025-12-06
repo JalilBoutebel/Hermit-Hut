@@ -1,10 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="text-center my-4">
-    <h1 class="display-5 fw-bold">Bienvenue sur Hermit's Hut</h1>
-    <p class="lead">Votre boutique en ligne de jeux video</p>
-</div>
+
 
 <div id="categoriesCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
@@ -13,10 +10,10 @@
             <div class="carousel-item {% if loop.first %}active{% endif %}">
                 <div class="d-flex justify-content-center">
                     <div class="card shadow-lg border-0" style="width: 18rem; border-radius: 1rem; overflow: hidden;">
-                        <img src="{{ categorie.image }}" class="card-img-top" alt="{{ categorie.libelle }}" style="height: 250px; object-fit: cover;">
+                        <img src="/{{ categorie.image }}" class="card-img-top" alt="{{ categorie.libelle }}" style="height: 250px; object-fit: cover;">
                         <div class="card-body bg-dark text-white">
                             <h5 class="card-title">{{ categorie.libelle }}</h5>
-                            <a href="/jeux/{{ categorie.id }}" class="btn btn-outline-light mt-2">Decouvrir</a>
+                            <a href="/jeux/{{ categorie.id }}" class="btn btn-outline-light mt-2">Découvrir</a>
                         </div>
                     </div>
                 </div>

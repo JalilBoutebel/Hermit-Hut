@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+<div id="categoriesCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+
+        {% for categorie in categories %}
+            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                <div class="d-flex justify-content-center">
+                    <div class="card shadow-lg border-0" style="width: 18rem; border-radius: 1rem; overflow: hidden;">
+                        <img src="{{ categorie.image }}" class="card-img-top" alt="{{ categorie.libelle }}" style="height: 250px; object-fit: cover;">
+                        <div class="card-body bg-dark text-white">
+                            <h5 class="card-title">{{ categorie.libelle }}</h5>
+                            <a href="/jeux/{{ categorie.id }}" class="btn btn-outline-light mt-2">Découvrir</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#categoriesCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#categoriesCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
+{% endblock %}
+
