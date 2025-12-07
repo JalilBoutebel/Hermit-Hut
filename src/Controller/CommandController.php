@@ -84,7 +84,6 @@ class CommandController extends AbstractController
 
         // Si le mode de paiement est "carte_bancaire" et qu'un paymentMethodId est fourni
         if ($data['paiement'] === 'carte_bancaire' && $paymentMethodId) {
-            Stripe::setApiKey($this->getParameter('stripe_secret_key'));
 
             try {
                 $paymentIntent = \Stripe\PaymentIntent::create([
