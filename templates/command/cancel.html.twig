@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement annulé{% endblock %}
+
+{% block body %}
+<div class="container text-center my-5">
+    <div class="card cancel-card mx-auto" style="max-width: 600px;">
+        <div class="card-body">
+            <h2 class="card-title text-warning mb-4">⚠️ Paiement annulé</h2>
+            <p class="card-text">Votre paiement pour la commande <strong>#{{ commande.id }}</strong> a été annulé.</p>
+            <p>Vous pouvez réessayer ou choisir un autre mode de paiement.</p>
+            <div class="d-grid gap-2">
+                <a href="{{ path('app_command_checkout') }}" class="btn btn-warning">Réessayer le paiement</a>
+                <a href="{{ path('app_accueil') }}" class="btn btn-outline-secondary">Retour à l'accueil</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .cancel-card {
+        border: 2px solid #ffc107;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(255, 193, 7, 0.2);
+    }
+</style>
+{% endblock %}

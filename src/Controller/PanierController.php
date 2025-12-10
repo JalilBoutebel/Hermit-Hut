@@ -19,6 +19,15 @@ final class PanierController extends AbstractController
         ]);
     }
 
+    // ✨ NOUVELLE ROUTE pour charger les détails du jeu dans le modal
+    #[Route('/jeu/details/{id}', name: 'app_jeu_details')]
+    public function details(Jeu $jeu): Response
+    {
+        return $this->render('jeu/details.html.twig', [
+            'jeu' => $jeu,
+        ]);
+    }
+
     #[Route('/panier/add/{id}', name: 'app_add_panier')]
     public function panier_add(int $id, JeuRepository $repo, Panier $panier): Response
     {
@@ -26,7 +35,6 @@ final class PanierController extends AbstractController
         if (!$jeu) {
             throw $this->createNotFoundException("Jeu introuvable !");
         }
-
         $panier->add($jeu);
         return $this->redirectToRoute('app_panier');
     }
@@ -38,7 +46,6 @@ final class PanierController extends AbstractController
         if (!$jeu) {
             throw $this->createNotFoundException("Jeu introuvable !");
         }
-
         $panier->del($jeu);
         return $this->redirectToRoute('app_panier');
     }

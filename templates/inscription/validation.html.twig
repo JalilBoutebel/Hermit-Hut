@@ -1,7 +1,67 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}Validation de votre compte{% endblock %}
 
 {% block body %}
-    
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0">Finalisation de votre inscription</h3>
+                </div>
+                <div class="card-body">
+                    {% for message in app.flashes('error') %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                    
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+
+                    {% for message in app.flashes('info') %}
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+
+                    <div class="alert alert-info mb-4">
+                        <i class="bi bi-info-circle-fill"></i>
+                        Bienvenue ! Choisissez un mot de passe sécurisé pour finaliser la création de votre compte.
+                    </div>
+
+                    {{ form_start(form) }}
+                        <div class="mb-3">
+                            {{ form_label(form.password.first, 'Mot de passe', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.password.first, {'attr': {'class': 'form-control', 'placeholder': 'Minimum 6 caractères'}}) }}
+                            <div class="form-text">
+                                Le mot de passe doit contenir au moins 6 caractères.
+                            </div>
+                            {{ form_errors(form.password.first) }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(form.password.second, 'Confirmer le mot de passe', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.password.second, {'attr': {'class': 'form-control', 'placeholder': 'Retapez votre mot de passe'}}) }}
+                            {{ form_errors(form.password.second) }}
+                        </div>
+
+                        {{ form_errors(form.password) }}
+
+                        <div class="d-grid gap-2">
+                            {{ form_widget(form.Envoyer, {'label': 'Valider mon compte', 'attr': {'class': 'btn btn-success btn-lg'}}) }}
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

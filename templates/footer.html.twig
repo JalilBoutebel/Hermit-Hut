@@ -1,14 +1,90 @@
-
-
 {% block footer %}
-<footer class="bg-transparent text-white text-center py-4 mt-4">
-    <div class="container footer">
-        <p>&copy; {{ "now"|date("Y") }} Hermit's Hut. Tous droits reserves.</p>
-        <p>Suivez-nous sur 
-            <a href="#" class="text-white ">Facebook</a>, 
-            <a href="#" class="text-white">Twitter</a>, 
-            <a href="#" class="text-white">Instagram</a>
-        </p>
+<footer class="footer-custom mt-5 pt-5 pb-4">
+    <div class="container">
+        <div class="row text-center text-md-start">
+            <!-- LOGO + DESCRIPTION -->
+            <div class="col-12 col-md-3 mb-4">
+                <h4 class="footer-title">Hermit's Hut</h4>
+                <p class="footer-text">
+                    Votre refuge pour les jeux rétro et modernes.  
+                    Découvrez des classiques, redécouvrez vos souvenirs.
+                </p>
+                <div class="social-icons mt-3">
+                    <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <!-- NAVIGATION RAPIDE -->
+            <div class="col-12 col-md-2 mb-4">
+                <h5 class="footer-section">Navigation</h5>
+                <ul class="footer-links">
+                    <li><a href="/"><i class="fas fa-home"></i> Accueil</a></li>
+                    <li><a href="#"><i class="fas fa-star"></i> Nouveautés</a></li>
+                    <li><a href="#"><i class="fas fa-tag"></i> Promotions</a></li>
+                    <li><a href="/panier"><i class="fas fa-shopping-cart"></i> Panier</a></li>
+                </ul>
+            </div>
+
+            <!-- CATÉGORIES POPULAIRES -->
+            <div class="col-12 col-md-2 mb-4">
+                <h5 class="footer-section">Catégories</h5>
+                <ul class="footer-links">
+                    <li><a href="#">Rétro</a></li>
+                    <li><a href="#">Xbox</a></li>
+                    <li><a href="#">PlayStation</a></li>
+                    <li><a href="#">Nintendo</a></li>
+                </ul>
+            </div>
+
+            <!-- AIDE & SUPPORT -->
+            <div class="col-12 col-md-2 mb-4">
+                <h5 class="footer-section">Aide & Support</h5>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="#"><i class="fas fa-file-contract"></i> CGV</a></li>
+                    <li><a href="#"><i class="fas fa-undo"></i> Retours</a></li>
+                    <li><a href="#"><i class="fas fa-headset"></i> Service client</a></li>
+                    <li><a href="#"><i class="fas fa-shield-alt"></i> Confidentialité</a></li>
+                </ul>
+            </div>
+
+            <!-- CONTACT & NEWSLETTER -->
+            <div class="col-12 col-md-3 mb-4">
+                <h5 class="footer-section">Restons connectés</h5>
+                <p class="footer-text mb-3">
+                    <i class="fas fa-envelope"></i> contact@hermitshut.com<br>
+                    <i class="fas fa-phone"></i> +33 1 23 45 67 89<br>
+                    <i class="fas fa-map-marker-alt"></i> Paris, France
+                </p>
+                <div class="newsletter-box">
+                    <p class="footer-text mb-2"><strong>Newsletter</strong></p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Votre email" class="newsletter-input" required>
+                        <button type="submit" class="newsletter-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                    <small class="footer-text-small">Recevez nos offres exclusives</small>
+                </div>
+            </div>
+        </div>
+        <!-- COPYRIGHT -->
+        <div class="footer-bottom text-center mt-4 pt-3">
+            <p class="footer-copy mb-1">
+                &copy; {{ "now"|date("Y") }} <strong>Hermit's Hut</strong> — Tous droits réservés.
+            </p>
+            <p class="footer-legal">
+                <a href="#">Mentions légales</a> • 
+                <a href="#">Politique de confidentialité</a> • 
+                <a href="#">Cookies</a> • 
+                <a href="#">Plan du site</a>
+            </p>
+        </div>
     </div>
 </footer>
+
 {% endblock %}

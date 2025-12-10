@@ -1,5 +1,16 @@
 controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+  resource:
+    path: ../src/Controller/
+    namespace: App\Controller
+  type: attribute
+
+stripe_checkout:
+  path: /command/checkout/create-session
+  controller: App\Controller\CommandeController::createStripeSession
+  methods: POST
+# config/routes.yaml
+app_command_details:
+  path: /command/{id}
+  controller: App\Controller\CommandController::details
+  requirements:
+    id: '\d+'

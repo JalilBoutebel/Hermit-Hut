@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement réussi !{% endblock %}
+
+{% block body %}
+<div class="container text-center my-5">
+    <div class="card success-card mx-auto" style="max-width: 600px;">
+        <div class="card-body">
+            <h2 class="card-title text-success mb-4">🎉 Paiement réussi !</h2>
+            <p class="card-text">Merci pour votre achat, {{ app.user.email }} !</p>
+            <p>Votre commande <strong>#{{ commande.id }}</strong> a été enregistrée avec succès.</p>
+            <p>Un email de confirmation vous a été envoyé à <strong>{{ app.user.email }}</strong>.</p>
+            <div class="my-4">
+                <h5>Récapitulatif de votre commande :</h5>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Jeu</th>
+                            <th>Quantité</th>
+                            <th>Prix</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ligne in commande.ligneCommandes %}
+                        <tr>
+                            <td>{{ ligne.jeu.libelle }}</td>
+                            <td>{{ ligne.quantite }}</td>
+                            <td>{{ (ligne.prix * ligne.quantite) | number_format(2, ',', ' ') }} €</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="2">Total</th>
+                            <th>{{ commande.total | number_format(2, ',', ' ') }} €</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="d-grid gap-2">
+                <a href="{{ path('app_accueil') }}" class="btn btn-success">Retour à l'accueil</a>
+                <a href="{{ path('app_command_details', {'id': commande.id}) }}" class="btn btn-outline-secondary">Voir les détails de la commande</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .success-card {
+        border: 2px solid #28a745;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(40, 167, 69, 0.2);
+    }
+</style>
+{% endblock %}

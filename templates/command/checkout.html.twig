@@ -1,0 +1,151 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="checkout-container">
+    <h1>Finaliser ma commande</h1>
+    <form id="checkout-form" method="post">
+        <!-- Champs d'adresse -->
+        <div class="form-group">
+            <label for="adresse">Adresse</label>
+            <input type="text" id="adresse" name="adresse" required></textarea>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="code_postal">Code postal</label>
+                <input type="text" id="code_postal" name="code_postal" required>
+            </div>
+            <div class="form-group">
+                <label for="ville">Ville</label>
+                <input type="text" id="ville" name="ville" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pays">Pays</label>
+            <input type="text" id="pays" name="pays" value="France" required>
+        </div>
+        <div class="form-group">
+            <label for="telephone">Téléphone</label>
+            <input type="tel" id="telephone" name="telephone" required>
+        </div>
+
+        <!-- Mode de paiement -->
+        <div class="payment-options">
+            <div class="payment-option">
+                <input type="radio" name="paiement" id="carte_bancaire" value="carte_bancaire" checked>
+                <label for="carte_bancaire" class="dcard">💳 Carte bancaire</label>
+                <!-- Conteneur pour Stripe Elements -->
+                <div id="card-element" class="stripe-card-field"></div>
+                <!-- Affichage des erreurs -->
+                <div id="card-errors" class="text-danger" role="alert"></div>
+            </div>
+            <!-- Autres options de paiement -->
+        </div>
+
+
+        <!-- Tableau du panier -->
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Jeu</th>
+                    <th>Prix unitaire</th>
+                    <th>Quantité</th>
+                    <th>Sous-total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in panier %}
+                <tr>
+                    <td>
+                        <strong>{{ item.jeu.libelle }}</strong>
+                        {% if item.jeu.image %}
+                            <br>
+                            <img src="{{ asset(item.jeu.image) }}" alt="{{ item.jeu.libelle }}" height="40">
+                        {% endif %}
+                    </td>
+                    <td>{{ item.jeu.prix }} €</td>
+                    <td>{{ item.quantite }}</td>
+                    <td>{{ item.jeu.prix * item.quantite }} €</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="3">Total</th>
+                    <th>{{ total }} €</th>
+                </tr>
+            </tfoot>
+        </table>
+
+        <!-- Bouton de confirmation -->
+        <button type="submit" class="btn-confirm">Confirmer la commande</button>
+    </form>
+</div>
+
+<!-- Script Stripe Elements -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const stripe = Stripe('{{ stripe_public_key }}');
+    const elements = stripe.elements();
+    const cardElement = elements.create('card', {
+        style: {
+            base: {
+                color: '#32325d',
+                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                fontSmoothing: 'antialiased',
+                fontSize: '16px',
+                '::placeholder': {
+                    color: '#aab7c4',
+                },
+            },
+            invalid: {
+                color: '#fa755a',
+                iconColor: '#fa755a',
+            },
+        },
+    });
+    cardElement.mount('#card-element');
+
+    const form = document.getElementById('checkout-form');
+    const cardErrors = document.getElementById('card-errors');
+
+    cardElement.addEventListener('change', function(event) {
+        if (event.error) {
+            cardErrors.textContent = event.error.message;
+        } else {
+            cardErrors.textContent = '';
+        }
+    });
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const paymentMethod = document.querySelector('input[name="paiement"]:checked').value;
+
+        if (paymentMethod === 'carte_bancaire') {
+            const { paymentMethod: stripePaymentMethod, error } = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement,
+                billing_details: {
+                    name: '{{ app.user.prenom }} {{ app.user.nom }}',
+                },
+            });
+
+            if (error) {
+                cardErrors.textContent = error.message;
+            } else {
+                const hiddenInput = document.createElement('input');
+                hiddenInput.setAttribute('type', 'hidden');
+                hiddenInput.setAttribute('name', 'paymentMethodId');
+                hiddenInput.setAttribute('value', stripePaymentMethod.id);
+                form.appendChild(hiddenInput);
+                form.submit();
+            }
+        } else {
+            form.submit();
+        }
+    });
+});
+</script>
+
+
+{% endblock %}

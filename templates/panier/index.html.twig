@@ -49,20 +49,12 @@
             </div>
 
             <p class="total">💰 Total : <strong>{{ total }} €</strong></p>
+            <a href="{{ path('app_command_checkout') }}" class="btn-valider">Valider l'achat</a>
         {% endif %}
     </div>
 </div>
 
 <style>
-/* 🌌 Arrière-plan global */
-body {
-    background-attachment: fixed;
-    font-family: 'Orbitron', sans-serif;
-    color: #fff;
-    min-height: 100vh;
-    margin: 0;
-}
-
 /* 🌫️ Conteneur centré */
 .panier-wrapper {
     display: flex;
@@ -176,5 +168,26 @@ body {
         margin-top: 15px;
     }
 }
+.btn-valider {
+    background: linear-gradient(135deg, #17e74bff, #14e65aff);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 12px;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 255, 42, 0.3);
+    border: none;
+    cursor: pointer;
+}
+.btn-valider:hover {
+    background: linear-gradient(135deg, #85ec0fff, #a8f31cff);
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(20, 189, 14, 0.5);
+}
+
 </style>
 {% endblock %}

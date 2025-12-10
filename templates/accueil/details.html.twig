@@ -4,7 +4,7 @@
 <div class="details-content">
     <h2>{{ jeu.libelle }}</h2>
     <img src="{{ asset(jeu.image) }}" alt="{{ jeu.libelle }}" class="details-img">
-    <p><strong>Categorie :</strong> {{ jeu.categorie.libelle }}</p>
+    <p><strong></strong> {{ jeu.categorie.libelle }}</p>
     <p>{{ jeu.description }}</p>
     <p class="price">💰 {{ jeu.prix }} €</p>
     <a href="{{ path('app_add_panier', {id: jeu.id}) }}" class="btn-add">🛒 Ajouter au panier</a>
@@ -13,7 +13,7 @@
 <style>
 .details-content {
     text-align: center;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 .details-img {
     max-width: 300px;
