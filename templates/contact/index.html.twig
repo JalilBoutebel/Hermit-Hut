@@ -92,20 +92,17 @@ button:hover, input[type="submit"]:hover {
     text-align: center;
 }
 </style>
-<div class="contact-page">
-    <div class="contact-container">
-        <h1>Contactez-nous 💬</h1>
-
-        {% for message in app.flashes('success') %}
-            <div class="alert-success">{{ message }}</div>
-        {% endfor %}
-
-        {{ form_start(form) }}
-            {{ form_row(form.email) }}
-            {{ form_row(form.subject) }}
-            {{ form_row(form.message) }}
-            {{ form_row(form.Envoyer) }}
-        {{ form_end(form) }}
+    <div class="contact-page">
+        <div class="contact-container">
+            <h1>Contactez-nous 💬</h1>
+            <form name="contact" method="post">
+                <div><label for="contact_email" class="required">Email</label><input type="text" id="contact_email" name="contact[email]" required="required" /></div>
+                <div><label for="contact_subject" class="required">Sujet</label><input type="text" id="contact_subject" name="contact[sujet]" required="required" /></div>
+                <div><label for="contact_message" class="required">Message</label><textarea id="contact_message" name="contact[message]" required="required"></textarea></div>
+                <div><button type="submit" id="contact_Envoyer" name="contact[Envoyer]">Envoyer</button></div>
+            <input type="hidden" id="contact__token" name="contact[_token]" value="f5.wRKl6mL9cUTPij3AMl_DRpB6T3l1UIQ7lg6ez_4T5Ys.tV_dpjCPBBC3zlWwbSaBDvI2GlQTE_FI03nkkLYiicSEVO_aV6k8fY7bWg" /></form>
+        </div>
+    </div>
     </div>
 </div>
 {% endblock %}

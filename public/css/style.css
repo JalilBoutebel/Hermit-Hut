@@ -6,8 +6,8 @@
 
 @font-face {
   font-family: "Roboto";
-  src: url("/Fonts/static/Roboto-Bold.ttf");
-  font-weight: normal;
+  src: url('/Fonts/Fonts/static/Roboto-Bold.ttf') format('truetype');
+  font-weight: bold;
   font-style: normal;
 }
 
@@ -425,15 +425,15 @@ body {
   }
 }
 
-/* FOOTER GAMER / NEON */
-.footer-custom {
+
+/* .footer-custom {
   background: rgba(0, 0, 0, 0.7);
   border-top: 2px solid #0ce44cff;
   color: #e2ffe6;
   font-family: "Roboto", sans-serif;
 }
 
-/* TITRES */
+
 .footer-title {
   color: #0ce44cff;
   font-size: 1.7rem;
@@ -448,12 +448,12 @@ body {
   text-shadow: 0 0 6px #0ce44cff;
 }
 
-/* TEXTE */
+
 .footer-text {
   opacity: 0.85;
 }
 
-/* LIENS */
+
 .footer-links {
   list-style: none;
   padding: 0;
@@ -474,7 +474,6 @@ body {
   text-shadow: 0 0 10px #0ce44cff;
 }
 
-/* ICONES RESEAUX SOCIAUX */
 .social-icons .social-link {
   display: inline-block;
   margin-right: 12px;
@@ -488,7 +487,7 @@ body {
   text-shadow: 0 0 10px #0ce44cff;
 }
 
-/* BAS DE PAGE */
+
 .footer-bottom {
   border-top: 1px solid rgba(12, 228, 76, 0.4);
 }
@@ -497,9 +496,8 @@ body {
   opacity: 0.7;
 }
 
-/* RESPONSIVE */
 @media (max-width: 768px) {
   .footer-custom {
     text-align: center;
   }
-}
+} */

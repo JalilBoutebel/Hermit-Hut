@@ -117,16 +117,13 @@
   width: 40px;
   height: 40px;
   background: rgba(12, 228, 76, 0.1);
-  border: 2px solid #0ce44cff;
-  border-radius: 50%;
   color: #0ce44cff;
   text-decoration: none;
   font-size: 1rem;
 }
 
 .social-link:hover {
-  color: #0a0e1a;
-  box-shadow: 0 5px 20px rgba(12, 228, 76, 0.5);
+  color: #c1f110;
 }
 
 /* NEWSLETTER */
