@@ -3,16 +3,16 @@
 
 {% block body %}
 <style>
-/* 🌌 Style global */
+/* Style global */
 .login-page {
     font-family: 'Orbitron', sans-serif;
     color: #fff;
     min-height: 100vh;
     padding-top: 80px;
     padding-bottom: 50px;
-}
+}Con
 
-/* 📬 Conteneur principal */
+/* Conteneur principal */
 .login-container {
     max-width: 500px;
     margin: 0 auto;
@@ -24,7 +24,7 @@
     box-shadow: 0 0 25px rgba(0, 255, 255, 0.15);
 }
 
-/* 🧠 Titre */
+/* Titre */
 .login-container h1 {
     text-align: center;
     color: #f7f7f7ff;
@@ -34,7 +34,7 @@
     font-size: 2rem;
 }
 
-/* ✉️ Champs */
+/* Champs */
 form > div {
     margin-bottom: 25px;
 }
@@ -72,7 +72,7 @@ input::placeholder {
     color: rgba(255, 255, 255, 0.5);
 }
 
-/* 🚀 Bouton */
+/* Bouton */
 button[type="submit"] {
     width: 100%;
     border: none;
@@ -115,7 +115,7 @@ button[type="submit"]:hover {
     cursor: pointer;
 }
 
-/* ✅ Message d'erreur */
+/* Message d'erreur */
 .alert-danger {
     background: rgba(255, 0, 0, 0.15);
     border: 1px solid rgba(255, 0, 0, 0.4);
@@ -171,7 +171,7 @@ button[type="submit"]:hover {
 
 <div class="login-page">
     <div class="login-container">
-        <h1>Se connecter 🔐</h1>
+        <h1>Se connecter </h1>
         
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>

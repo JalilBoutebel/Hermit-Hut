@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}📜 Mes commandes - Hermit's Hut{% endblock %}
+{% block title %}Mes commandes - Hermit's Hut{% endblock %}
 
 {% block body %}
 <div class="command-wrapper">
     <div class="command-container">
-        <h1>📜 Mes commandes</h1>
+        <h1>Mes commandes</h1>
         
         <p class="welcome-text">Bienvenue {{ app.user.prenom }} ! 🎮</p>
         
@@ -28,15 +28,15 @@
                                 <span class="label">Statut :</span>
                                 <span class="statut statut-{{ commande.statut }}">
                                     {% if commande.statut == 'en_attente' %}
-                                        ⏳ En attente
+                                        En attente
                                     {% elseif commande.statut == 'validee' %}
-                                        ✅ Validée
+                                        Validée
                                     {% elseif commande.statut == 'expediee' %}
-                                        📦 Expédiée
+                                        Expédiée
                                     {% elseif commande.statut == 'livree' %}
-                                        🎉 Livrée
+                                        Livrée
                                     {% elseif commande.statut == 'annulee' %}
-                                        ❌ Annulée
+                                        Annulée
                                     {% endif %}
                                 </span>
                             </div>
@@ -58,7 +58,7 @@
 </div>
 
 <style>
-/* 🌌 Arrière-plan global */
+/* Arrière-plan global */
 body {
     background-attachment: fixed;
     font-family: 'Orbitron', sans-serif;
@@ -67,7 +67,7 @@ body {
     margin: 0;
 }
 
-/* 🌫️ Conteneur centré */
+/* Conteneur centré */
 .command-wrapper {
     display: flex;
     justify-content: center;
@@ -75,7 +75,7 @@ body {
     padding: 60px 15px;
 }
 
-/* 📜 Bloc des commandes */
+/* Bloc des commandes */
 .command-container {
     width: 100%;
     max-width: 1000px;
@@ -86,7 +86,7 @@ body {
     backdrop-filter: blur(10px);
 }
 
-/* 🧠 Titre */
+/* Titre */
 .command-container h1 {
     text-align: center;
     color: #20dd75ff;
@@ -102,7 +102,7 @@ body {
     margin-bottom: 40px;
 }
 
-/* 🎯 État vide */
+/* État vide */
 .empty-state {
     text-align: center;
     padding: 60px 20px;
@@ -115,14 +115,14 @@ body {
     font-size: 1.1rem;
 }
 
-/* 📋 Liste des commandes */
+/* Liste des commandes */
 .commandes-list {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-/* 🎴 Carte de commande */
+/* Carte de commande */
 .commande-card {
     display: block;
     background: rgba(0, 0, 0, 0.4);
@@ -140,7 +140,7 @@ body {
     box-shadow: 0 0 20px rgba(32, 221, 117, 0.3);
 }
 
-/* 📌 En-tête de la carte */
+/* En-tête de la carte */
 .commande-header {
     display: flex;
     justify-content: space-between;
@@ -161,7 +161,7 @@ body {
     font-size: 0.9rem;
 }
 
-/* 📝 Corps de la carte */
+/* Corps de la carte */
 .commande-body {
     display: flex;
     gap: 30px;
@@ -237,7 +237,7 @@ body {
     text-shadow: 0 0 8px #0be97aff;
 }
 
-/* 🎮 Bouton principal */
+/* Bouton principal */
 .btn-primary {
     display: inline-block;
     padding: 15px 40px;
@@ -257,7 +257,7 @@ body {
     box-shadow: 0 0 30px rgba(145, 247, 28, 0.7);
 }
 
-/* 📱 Responsive */
+/* Responsive */
 @media (max-width: 768px) {
     .command-container {
         padding: 20px;

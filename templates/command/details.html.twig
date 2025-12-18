@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}📦 Détails commande #{{ commande.id }} - Hermit's Hut{% endblock %}
+{% block title %}Détails commande #{{ commande.id }} - Hermit's Hut{% endblock %}
 
 {% block body %}
 <div class="command-wrapper">
@@ -9,20 +9,20 @@
             <a href="{{ path('app_command') }}" class="btn-back">← Retour aux commandes</a>
         </div>
 
-        <h1>📦 Commande #{{ commande.id }}</h1>
+        <h1>Commande #{{ commande.id }}</h1>
         
         <div class="commande-status">
             <div class="status-badge statut-{{ commande.statut }}">
                 {% if commande.statut == 'en_attente' %}
-                    ⏳ En attente de validation
+                    En attente de validation
                 {% elseif commande.statut == 'validee' %}
-                    ✅ Commande validée
+                    Commande validée
                 {% elseif commande.statut == 'expediee' %}
-                    📦 Commande expédiée
+                    Commande expédiée
                 {% elseif commande.statut == 'livree' %}
-                    🎉 Commande livrée
+                    Commande livrée
                 {% elseif commande.statut == 'annulee' %}
-                    ❌ Commande annulée
+                    Commande annulée
                 {% endif %}
             </div>
             <p class="date-commande">Passée le {{ commande.dateCommande|date('d/m/Y à H:i') }}</p>
@@ -30,7 +30,7 @@
 
         {# Informations de livraison #}
         <div class="section">
-            <h2>📍 Adresse de livraison</h2>
+            <h2> Adresse de livraison</h2>
             <div class="info-box">
                 <p><strong>{{ app.user.nom }} {{ app.user.prenom }}</strong></p>
                 <p>{{ commande.adresseLivraison }}</p>
@@ -89,14 +89,14 @@
             </table>
             
             <div class="total-section">
-                <p class="total-final">💰 Total : <strong>{{ commande.total }} €</strong></p>
+                <p class="total-final"> Total : <strong>{{ commande.total }} €</strong></p>
             </div>
         </div>
     </div>
 </div>
 
 <style>
-/* 🌌 Arrière-plan global */
+/*Arrière-plan global */
 body {
     background-attachment: fixed;
     font-family: 'Orbitron', sans-serif;
@@ -105,7 +105,7 @@ body {
     margin: 0;
 }
 
-/* 🌫️ Conteneur centré */
+/* Conteneur centré */
 .command-wrapper {
     display: flex;
     justify-content: center;
@@ -113,7 +113,7 @@ body {
     padding: 60px 15px;
 }
 
-/* 📦 Bloc des détails */
+/* Bloc des détails */
 .command-container {
     width: 100%;
     max-width: 1000px;
@@ -124,7 +124,7 @@ body {
     backdrop-filter: blur(10px);
 }
 
-/* 🔙 Actions en-tête */
+/* Actions en-tête */
 .header-actions {
     margin-bottom: 20px;
 }
@@ -146,7 +146,7 @@ body {
     transform: translateX(-5px);
 }
 
-/* 🧠 Titre */
+/* Titre */
 .command-container h1 {
     text-align: center;
     color: #20dd75ff;
@@ -162,7 +162,7 @@ body {
     font-size: 1.3rem;
 }
 
-/* 📊 Statut de la commande */
+/* Statut de la commande */
 .commande-status {
     text-align: center;
     margin-bottom: 40px;
@@ -212,12 +212,12 @@ body {
     font-size: 0.95rem;
 }
 
-/* 📦 Sections */
+/* Sections */
 .section {
     margin-bottom: 30px;
 }
 
-/* 📝 Boîte d'infos */
+/* Boîte d'infos */
 .info-box {
     background: rgba(0, 0, 0, 0.4);
     border: 2px solid rgba(13, 211, 79, 0.3);
@@ -230,7 +230,7 @@ body {
     color: #f0f0f0;
 }
 
-/* 🧾 Tableau des détails */
+/* Tableau des détails */
 .details-table {
     width: 100%;
     border-collapse: collapse;
@@ -259,14 +259,14 @@ body {
     background: rgba(255, 255, 255, 0.05);
 }
 
-/* 🎮 Images des jeux */
+/* Images des jeux */
 .jeu-img {
     border-radius: 8px;
     margin-top: 8px;
     box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
 }
 
-/* 💰 Total */
+/* Total */
 .total-section {
     margin-top: 20px;
     text-align: right;
