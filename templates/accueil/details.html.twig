@@ -6,7 +6,7 @@
     <img src="{{ asset(jeu.image) }}" alt="{{ jeu.libelle }}" class="details-img">
     <p><strong></strong> {{ jeu.categorie.libelle }}</p>
     <p>{{ jeu.description }}</p>
-    <p class="price">💰 {{ jeu.prix }} €</p>
+    <p class="price"> {{ jeu.prix }} €</p>
     <a href="{{ path('app_add_panier', {id: jeu.id}) }}" class="btn-add">🛒 Ajouter au panier</a>
 </div>
 
